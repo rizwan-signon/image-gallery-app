@@ -1,17 +1,23 @@
-import React from "react";
-
-const Note = ({ note, onDelete }) => {
+const ImageGallery = ({ images, onDelete }) => {
   return (
-    <div className="bg-yellow-200 p-4 rounded shadow-md">
-      <p>{note.text}</p>
-      <button
-        onClick={() => onDelete(note.id)}
-        className="bg-red-500 text-white px-2 py-1 mt-2"
-      >
-        Delete
-      </button>
+    <div className="p-4 grid grid-cols-3 gap-4">
+      {images.map((image, index) => (
+        <div key={index} className="relative">
+          <img
+            src={image}
+            alt="Uploaded"
+            className="w-full h-40 object-cover rounded"
+          />
+          <button
+            onClick={() => onDelete(index)}
+            className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded"
+          >
+            ✖
+          </button>
+        </div>
+      ))}
     </div>
   );
 };
 
-export default Note;
+export default ImageGallery;

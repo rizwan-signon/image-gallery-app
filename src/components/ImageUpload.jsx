@@ -1,28 +1,33 @@
-import React, { useState } from "react";
+const ImageUpload = ({ onUpload }) => {
+  const [image, setImage] = useState(null);
 
-const AddNote = ({ onAdd }) => {
-  const [text, setText] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (text.trim() === "") return;
-    onAdd(text);
-    setText("");
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        onUpload(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4">
-      <textarea
-        placeholder="Write a note..."
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        className="w-full border p-2"
-      ></textarea>
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 mt-2">
-        Add Note
-      </button>
-    </form>
+    <div className="p-4 text-center">
+      <input
+        type="file"
+        onChange={handleImageChange}
+        className="hidden"
+        id="upload"
+      />
+      <label
+        htmlFor="upload"
+        className="bg-blue-500 text-white px-4 py-2 cursor-pointer"
+      >
+        Upload Image
+      </label>
+    </div>
   );
 };
 
-export default AddNote;
+export default ImageUpload;
